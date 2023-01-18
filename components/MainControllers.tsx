@@ -1,24 +1,11 @@
-import { IoRepeat, IoShuffle } from "react-icons/io5";
-import {
-  MdPause,
-  MdPlayArrow,
-  MdSkipNext,
-  MdSkipPrevious,
-} from "react-icons/md";
-import { usePlayer } from "../context/PlayerContext";
-import styles from "../styles/ProgressBar.module.css";
-import { fmtMSS } from "../utils/formatDuration";
+import { IoRepeat, IoShuffle } from 'react-icons/io5';
+import { MdPause, MdPlayArrow, MdSkipNext, MdSkipPrevious } from 'react-icons/md';
+import { usePlayer } from '../context/PlayerContext';
+import styles from '../styles/ProgressBar.module.css';
+import { fmtMSS } from '../utils/formatDuration';
 
 export default function MainControllers() {
-  const {
-    isPlaying,
-    setSlider,
-    setDrag,
-    togglePlay,
-    duration,
-    currentTime,
-    slider,
-  } = usePlayer();
+  const { isPlaying, setSlider, setDrag, togglePlay, duration, currentTime, slider } = usePlayer();
 
   return (
     <div className="flex flex-col items-center justify-center col-span-7 gap-3">
@@ -38,9 +25,7 @@ export default function MainControllers() {
       </div>
 
       <div className="flex items-center justify-center w-full gap-5">
-        <span className="text-xs text-gray">
-          {currentTime ? fmtMSS(currentTime * 1000) : "0:00"}
-        </span>
+        <span className="text-xs text-gray">{currentTime ? fmtMSS(currentTime * 1000) : '0:00'}</span>
         <input
           type="range"
           className={styles.player}
@@ -50,9 +35,7 @@ export default function MainControllers() {
             setDrag(parseInt(e.target.value));
           }}
         />
-        <span className="text-xs text-gray">
-          {duration ? fmtMSS(duration * 1000) : "0:00"}
-        </span>
+        <span className="text-xs text-gray">{duration ? fmtMSS(duration * 1000) : '0:00'}</span>
       </div>
     </div>
   );

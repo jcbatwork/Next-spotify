@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { useSpotify } from "../context/SpotifyContext";
-import AdditionalControllers from "./AdditionalControllers";
-import PlayerTrackInfo from "./PlayerTrackInfo";
+import { useEffect, useState } from 'react';
+import { useSpotify } from '../context/SpotifyContext';
+import AdditionalControllers from './AdditionalControllers';
+import PlayerTrackInfo from './PlayerTrackInfo';
 
 export default function PlayerTwo() {
   const { currentTrack } = useSpotify();
@@ -25,23 +25,23 @@ export default function PlayerTwo() {
 
   useEffect(() => {
     if (audio) {
-      audio.addEventListener("ended", () => setPlaying(false));
+      audio.addEventListener('ended', () => setPlaying(false));
     }
     return () => {
-      audio?.removeEventListener("ended", () => setPlaying(false));
+      audio?.removeEventListener('ended', () => setPlaying(false));
     };
   });
 
   return (
     <footer
       className={`sticky bottom-0 grid grid-cols-12 items-center justify-between px-5 border-[#272727] bg-player ${
-        currentTrack ? "py-3 border-t" : "py-0 border-0"
+        currentTrack ? 'py-3 border-t' : 'py-0 border-0'
       }`}
     >
       {currentTrack && (
         <>
           <PlayerTrackInfo currentTrack={currentTrack} />
-          <button onClick={toggle}>{playing ? "Pause" : "Play"}</button>
+          <button onClick={toggle}>{playing ? 'Pause' : 'Play'}</button>
           {JSON.stringify(audio, null, 4)}
           {/* <MainControllers previewUrl={currentTrack.preview_url} /> */}
           <AdditionalControllers />

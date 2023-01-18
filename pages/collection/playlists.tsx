@@ -1,14 +1,14 @@
-import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/react";
-import Link from "next/link";
-import CardItem from "../../components/CardItem";
-import CardItemGrid from "../../components/CardItemGrid";
-import Heading from "../../components/Heading";
-import Layout from "../../components/Layout";
-import { useSpotify } from "../../context/SpotifyContext";
-import { PlaylistType } from "../../types/types";
-import { customGet } from "../../utils/customGet";
-import { isAuthenticated } from "../../utils/isAuthenticated";
+import { GetServerSideProps } from 'next';
+import { getSession } from 'next-auth/react';
+import Link from 'next/link';
+import CardItem from '../../components/CardItem';
+import CardItemGrid from '../../components/CardItemGrid';
+import Heading from '../../components/Heading';
+import Layout from '../../components/Layout';
+import { useSpotify } from '../../context/SpotifyContext';
+import { PlaylistType } from '../../types/types';
+import { customGet } from '../../utils/customGet';
+import { isAuthenticated } from '../../utils/isAuthenticated';
 
 interface IProps {
   likedTracks: PlaylistType;
@@ -25,14 +25,13 @@ export default function UserPlaylists({ likedTracks }: IProps) {
           <div
             className="flex flex-col items-start justify-end col-span-2 gap-8 p-4 rounded cursor-pointer"
             style={{
-              background: "linear-gradient(149.46deg,#450af5,#8e8ee5 99.16%)",
+              background: 'linear-gradient(149.46deg,#450af5,#8e8ee5 99.16%)',
             }}
           >
             <div className="inline">
               {likedTracks?.items.map(({ track }) => (
                 <span key={track.id} className="mr-3">
-                  <span>{track.artists[0].name}</span>{" "}
-                  <span className="text-white opacity-70">{track.name}</span>
+                  <span>{track.artists[0].name}</span> <span className="text-white opacity-70">{track.name}</span>
                 </span>
               ))}
             </div>
@@ -65,16 +64,13 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   if (!isAuthenticated(session)) {
     return {
       redirect: {
-        destination: "/login",
+        destination: '/login',
         permanent: false,
       },
     };
   }
 
-  const likedTracks = await customGet(
-    `https://api.spotify.com/v1/me/tracks?market=from_token&limit=5`,
-    session
-  );
+  const likedTracks = await customGet(`https://api.spotify.com/v1/me/tracks?market=from_token&limit=5`, session);
 
   return { props: { likedTracks } };
 };

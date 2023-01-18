@@ -1,6 +1,6 @@
-import { Artist } from "../types/types";
-import CardItem from "./CardItem";
-import CardItemGrid from "./CardItemGrid";
+import { Artist } from '../types/types';
+import CardItem from './CardItem';
+import CardItemGrid from './CardItemGrid';
 
 interface IProps {
   artists: Artist[];

@@ -1,5 +1,5 @@
 module.exports = {
   images: {
-    domains: ["t.scdn.co", "i.scdn.co", "mosaic.scdn.co"],
+    domains: ['t.scdn.co', 'i.scdn.co', 'mosaic.scdn.co'],
   },
 };

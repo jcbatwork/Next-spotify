@@ -1,6 +1,6 @@
-import { PlaylistType } from "../types/types";
-import CardItem from "./CardItem";
-import CardItemGrid from "./CardItemGrid";
+import { PlaylistType } from '../types/types';
+import CardItem from './CardItem';
+import CardItemGrid from './CardItemGrid';
 
 interface IProps {
   playlists: PlaylistType[];

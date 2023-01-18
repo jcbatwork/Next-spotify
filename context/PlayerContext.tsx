@@ -1,12 +1,11 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { Track } from "../types/types";
+import { createContext, useContext, useEffect, useState } from 'react';
+import { Track } from '../types/types';
 
 const PlayerContext = createContext({} as any);
 
 export default function PlayerProvider({ children }) {
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
-  const [currentTrackAudio, setCurrentTrackAudio] =
-    useState<HTMLAudioElement | null>(null);
+  const [currentTrackAudio, setCurrentTrackAudio] = useState<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -29,19 +28,15 @@ export default function PlayerProvider({ children }) {
     const setAudioTime = () => {
       const currTime = tempAudio.currentTime;
       setCurrentTime(currTime);
-      setSlider(
-        currTime
-          ? Number(((currTime * 100) / tempAudio.duration).toFixed(1))
-          : 0
-      );
+      setSlider(currTime ? Number(((currTime * 100) / tempAudio.duration).toFixed(1)) : 0);
     };
 
-    tempAudio.addEventListener("loadeddata", setAudioData);
-    tempAudio.addEventListener("timeupdate", setAudioTime);
-    tempAudio.preload = "none";
+    tempAudio.addEventListener('loadeddata', setAudioData);
+    tempAudio.addEventListener('timeupdate', setAudioTime);
+    tempAudio.preload = 'none';
 
     setCurrentTrackAudio(tempAudio);
-    console.log("audio set");
+    console.log('audio set');
 
     return () => {
       pause();
@@ -75,9 +70,7 @@ export default function PlayerProvider({ children }) {
 
   useEffect(() => {
     if (currentTrackAudio && drag) {
-      currentTrackAudio.currentTime = Math.round(
-        (drag * currentTrackAudio.duration) / 100
-      );
+      currentTrackAudio.currentTime = Math.round((drag * currentTrackAudio.duration) / 100);
     }
   }, [drag]);
 

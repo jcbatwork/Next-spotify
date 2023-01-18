@@ -1,7 +1,7 @@
-import { RiMusic2Fill } from "react-icons/ri";
+import { RiMusic2Fill } from 'react-icons/ri';
 
-import Link from "next/link";
-import { useRef } from "react";
+import Link from 'next/link';
+import { useRef } from 'react';
 
 interface IProps {
   images: any;
@@ -13,15 +13,7 @@ interface IProps {
   type: string;
 }
 
-export default function CardItem({
-  images,
-  id,
-  altTitle,
-  heading,
-  subheading = "",
-  imageRounded = false,
-  type,
-}: IProps) {
+export default function CardItem({ images, id, altTitle, heading, subheading = '', imageRounded = false, type }: IProps) {
   const thumbnailRef = useRef<HTMLImageElement>();
 
   return (
@@ -32,9 +24,7 @@ export default function CardItem({
             src={images[0].url}
             alt={altTitle}
             ref={thumbnailRef}
-            className={`object-cover w-full h-36  ${
-              imageRounded ? "rounded-full" : "rounded"
-            }`}
+            className={`object-cover w-full h-36  ${imageRounded ? 'rounded-full' : 'rounded'}`}
           />
         ) : (
           <div className="w-full h-40">
@@ -42,9 +32,7 @@ export default function CardItem({
           </div>
         )}
         <h3 className="mt-5 font-bold truncate">{heading}</h3>
-        {subheading && (
-          <h6 className="text-sm truncate text-gray">{subheading}</h6>
-        )}
+        {subheading && <h6 className="text-sm truncate text-gray">{subheading}</h6>}
       </div>
     </Link>
   );

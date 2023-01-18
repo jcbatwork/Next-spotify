@@ -1,17 +1,17 @@
-import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/react";
-import Link from "next/link";
-import { Fragment } from "react";
-import AlbumList from "../../../components/AlbumList";
-import ArtistList from "../../../components/ArtistList";
-import Heading from "../../../components/Heading";
-import Layout from "../../../components/Layout";
-import PlaylistList from "../../../components/PlaylistList";
-import { useSpotify } from "../../../context/SpotifyContext";
-import { SearchResults, Track } from "../../../types/types";
-import { customGet } from "../../../utils/customGet";
-import { fmtMSS } from "../../../utils/formatDuration";
-import { isAuthenticated } from "../../../utils/isAuthenticated";
+import { GetServerSideProps } from 'next';
+import { getSession } from 'next-auth/react';
+import Link from 'next/link';
+import { Fragment } from 'react';
+import AlbumList from '../../../components/AlbumList';
+import ArtistList from '../../../components/ArtistList';
+import Heading from '../../../components/Heading';
+import Layout from '../../../components/Layout';
+import PlaylistList from '../../../components/PlaylistList';
+import { useSpotify } from '../../../context/SpotifyContext';
+import { SearchResults, Track } from '../../../types/types';
+import { customGet } from '../../../utils/customGet';
+import { fmtMSS } from '../../../utils/formatDuration';
+import { isAuthenticated } from '../../../utils/isAuthenticated';
 
 interface IProps {
   query: string;
@@ -39,29 +39,16 @@ export default function Search({ query, searchResults }: IProps) {
             </Link>
 
             {searchResults.tracks.items?.slice(0, 5).map((track) => (
-              <div
-                className={`grid grid-cols-12 col-span-12 p-1 ${
-                  !track.preview_url ? "opacity-50" : ""
-                }`}
-                key={track.id}
-              >
+              <div className={`grid grid-cols-12 col-span-12 p-1 ${!track.preview_url ? 'opacity-50' : ''}`} key={track.id}>
                 <div className="flex items-center w-full col-span-11 my-3">
                   <div className="flex items-center w-full gap-4">
                     <div className="flex-shrink-0 w-10 h-10">
-                      <img
-                        src={track.album.images[0].url}
-                        alt={track.name}
-                        className="object-contain w-10 h-10"
-                      />
+                      <img src={track.album.images[0].url} alt={track.name} className="object-contain w-10 h-10" />
                     </div>
 
                     <div className="w-full">
                       <div
-                        className={`w-10/12 text-sm font-medium truncate ${
-                          track.preview_url
-                            ? "cursor-pointer hover:underline"
-                            : "cursor-default"
-                        }`}
+                        className={`w-10/12 text-sm font-medium truncate ${track.preview_url ? 'cursor-pointer hover:underline' : 'cursor-default'}`}
                         onClick={() => playTrack(track)}
                       >
                         {track.name}
@@ -72,11 +59,7 @@ export default function Search({ query, searchResults }: IProps) {
                           {track.artists.map((artist, index) => (
                             <Link key={artist.id} href={`/artist/${artist.id}`}>
                               <a>
-                                <span className="hover:text-white hover:underline">
-                                  {index !== 0
-                                    ? `, ${artist.name}`
-                                    : artist.name}
-                                </span>
+                                <span className="hover:text-white hover:underline">{index !== 0 ? `, ${artist.name}` : artist.name}</span>
                               </a>
                             </Link>
                           ))}
@@ -86,9 +69,7 @@ export default function Search({ query, searchResults }: IProps) {
                   </div>
                 </div>
 
-                <div className="flex items-center col-span-1 my-3 text-sm text-gray ">
-                  {fmtMSS(track.duration_ms)}
-                </div>
+                <div className="flex items-center col-span-1 my-3 text-sm text-gray ">{fmtMSS(track.duration_ms)}</div>
               </div>
             ))}
           </div>
@@ -119,9 +100,7 @@ export default function Search({ query, searchResults }: IProps) {
                 <Heading text="Playlists" />
               </a>
             </Link>
-            <PlaylistList
-              playlists={searchResults.playlists.items.slice(0, 6)}
-            />
+            <PlaylistList playlists={searchResults.playlists.items.slice(0, 6)} />
           </div>
         </>
       )}
@@ -135,7 +114,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   if (!(await isAuthenticated(session))) {
     return {
       redirect: {
-        destination: "/login",
+        destination: '/login',
         permanent: false,
       },
     };

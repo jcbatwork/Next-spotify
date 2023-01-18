@@ -1,13 +1,13 @@
-import { GetServerSideProps } from "next";
-import { getToken } from "next-auth/jwt";
-import { getSession } from "next-auth/react";
-import AlbumList from "../components/AlbumList";
-import Heading from "../components/Heading";
-import Layout from "../components/Layout";
-import PlaylistList from "../components/PlaylistList";
-import { customGet } from "../utils/customGet";
-import { getGreeting } from "../utils/getGreeting";
-import { isAuthenticated } from "../utils/isAuthenticated";
+import { GetServerSideProps } from 'next';
+import { getToken } from 'next-auth/jwt';
+import { getSession } from 'next-auth/react';
+import AlbumList from '../components/AlbumList';
+import Heading from '../components/Heading';
+import Layout from '../components/Layout';
+import PlaylistList from '../components/PlaylistList';
+import { customGet } from '../utils/customGet';
+import { getGreeting } from '../utils/getGreeting';
+import { isAuthenticated } from '../utils/isAuthenticated';
 
 export default function Home({ newReleases, featuredPlaylists }) {
   return (
@@ -29,21 +29,15 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   if (!(await isAuthenticated(session))) {
     return {
       redirect: {
-        destination: "/login",
+        destination: '/login',
         permanent: false,
       },
     };
   }
 
-  const newReleases = await customGet(
-    "https://api.spotify.com/v1/browse/new-releases?country=IN&limit=25",
-    session
-  );
+  const newReleases = await customGet('https://api.spotify.com/v1/browse/new-releases?country=SV&limit=25', session);
 
-  const featuredPlaylists = await customGet(
-    "https://api.spotify.com/v1/browse/featured-playlists?country=IN",
-    session
-  );
+  const featuredPlaylists = await customGet('https://api.spotify.com/v1/browse/featured-playlists?country=SV', session);
 
   return { props: { newReleases, featuredPlaylists } };
 };

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { createContext, Dispatch, SetStateAction, useContext, useState } from 'react';
+import { createContext, Dispatch, SetStateAction, useCallback, useContext, useState, useMemo } from 'react';
 import { PlaylistType, SearchResults, Track } from '../types/types';
 
 interface ContextProps {
@@ -15,16 +15,20 @@ interface ContextProps {
   setTracksQueue: Dispatch<SetStateAction<Track[]>>;
 }
 
-const SpotifyContext = createContext({} as ContextProps);
+const SpotifyContext = createContext<ContextProps | null>(null);
 
-export const SpotifyProvider = ({ children }: any) => {
+interface Props {
+  children: React.ReactNode;
+}
+
+export const SpotifyProvider = ({ children }: Props) => {
   const [playlists, setPlaylists] = useState<PlaylistType[]>([]);
   const [searchResults, setSearchResults] = useState<SearchResults | null>(null);
   const [tracksQueue, setTracksQueue] = useState<Track[]>([]);
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
   const [query, setQuery] = useState('');
 
-  const fetchPlaylists = async () => {
+  const fetchPlaylists = useCallback(async () => {
     try {
       const resp = await axios.get('/api/playlists');
       const data = resp.data;
@@ -32,35 +36,38 @@ export const SpotifyProvider = ({ children }: any) => {
     } catch (err) {
       console.log(err);
     }
-  };
+  }, []);
 
-  const fetchSearchResults = async () => {
+  const fetchSearchResults = useCallback(async () => {
     try {
       const resp = await axios.get(`/api/search?q=${query}`);
       setSearchResults(resp.data);
     } catch (err) {
       console.error(err);
     }
-  };
+  }, [query]);
 
-  return (
-    <SpotifyContext.Provider
-      value={{
-        playlists,
-        fetchPlaylists,
-        query,
-        setQuery,
-        searchResults,
-        fetchSearchResults,
-        currentTrack,
-        setCurrentTrack,
-        tracksQueue,
-        setTracksQueue,
-      }}
-    >
-      {children}
-    </SpotifyContext.Provider>
+  const memoizedContextValue = useMemo(
+    () => ({
+      playlists,
+      fetchPlaylists,
+      query,
+      setQuery,
+      searchResults,
+      fetchSearchResults,
+      currentTrack,
+      setCurrentTrack,
+      tracksQueue,
+      setTracksQueue,
+    }),
+    [playlists, fetchPlaylists, query, setQuery, searchResults, fetchSearchResults, currentTrack, setCurrentTrack, tracksQueue, setTracksQueue]
   );
+
+  return <SpotifyContext.Provider value={memoizedContextValue}>{children}</SpotifyContext.Provider>;
 };
 
-export const useSpotify = () => useContext(SpotifyContext);
+export const useSpotify = () => {
+  const spotifyContext = useContext(SpotifyContext);
+  if (!spotifyContext) throw new Error('You need to use this context inside a provider');
+  return spotifyContext;
+};

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Track } from '../types/types';
 import { IoHeart } from 'react-icons/io5';
+import Image from 'next/image';
 
 interface IProps {
   currentTrack: Track;
